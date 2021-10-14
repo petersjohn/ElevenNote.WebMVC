@@ -56,7 +56,7 @@ namespace ElevenNote.Services
         }
         public NoteDetail GetNoteById(int id)
         {
-            using (var ctx = new ApplicationDbContext)
+            using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
