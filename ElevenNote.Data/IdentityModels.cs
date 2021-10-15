@@ -34,6 +34,8 @@ namespace ElevenNote.Data
 
         public DbSet<Note> Notes { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder
