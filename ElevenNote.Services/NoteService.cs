@@ -48,9 +48,26 @@ namespace ElevenNote.Services
                                 {
                                     NoteId = e.NoteId,
                                     Title = e.Title,
+                                    CategoryId = e.CategoryId,
                                     CreatedUtc = e.CreatedUtc
                                 }
                                );
+                return query.ToArray();
+            }
+        }
+
+        public IEnumerable<NoteEdit> GetNotesByCatId(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query = ctx.Notes.Where(e => e.CategoryId == id && e.OwnerId == _userId)
+                    .Select(e => new NoteEdit
+                    {
+                        NoteId = e.NoteId,
+                        Title = e.Title,
+                        CategoryId = e.CategoryId,
+                        Content = e.Content
+                    });
                 return query.ToArray();
             }
         }
