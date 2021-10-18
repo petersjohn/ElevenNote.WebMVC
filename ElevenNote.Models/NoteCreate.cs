@@ -1,9 +1,11 @@
-﻿using System;
+﻿using ElevenNote.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace ElevenNote.Models
 {
@@ -15,6 +17,10 @@ namespace ElevenNote.Models
         public string Title { get; set; }
         [MaxLength(8000)]
         public string Content { get; set; }
-        public int CategoryID { get; set; }
+        public int? CategoryID { get; set; }
+
+        public IEnumerable<SelectListItem> Categories { get; set; }
+
+
     }
 }

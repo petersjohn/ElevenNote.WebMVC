@@ -11,6 +11,7 @@ namespace ElevenNote.WebMVC.Controllers
 {
     public class NoteController : Controller
     {
+        
         [Authorize]
         // GET: Note
         public ActionResult Index()
@@ -24,8 +25,11 @@ namespace ElevenNote.WebMVC.Controllers
         //Get 
         public ActionResult Create()
         {
-            return View();
+            var service = CreateNoteService();
+            var viewModel = service.GetCreateView();
+            return View(viewModel);
         }
+  
 
         [HttpPost]
         [ValidateAntiForgeryToken]

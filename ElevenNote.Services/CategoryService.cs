@@ -22,7 +22,9 @@ namespace ElevenNote.Services
             var entity = new Category()
             {
                 Name = model.Name,
-                OwnerId = model.OwnerId
+                OwnerId = _userId
+
+                
             };
             using (var ctx = new ApplicationDbContext())
             {

@@ -9,15 +9,6 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-@if (TempData.ContainsKey("SaveResult"))
-{
-    <div class="alert alert-success fade in" role="alert">
-        <button type="button" class="close" data-dismiss="alert">
-            <span>&times;</span>
-        </button>
-        @TempData["SaveResult"]
-    </div>
-}
 <table class="table">
     <tr>
         <th>
@@ -25,6 +16,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CreatedUtc)
@@ -41,11 +35,14 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.CategoryId) <!--Ask about why the name isn't pulling thru'-->
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.CreatedUtc)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new {  id= item.NoteId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.NoteId }) |
+            @Html.ActionLink("Edit", "Edit", new { id = item.NoteId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.NoteId })  |
             @Html.ActionLink("Delete", "Delete", new { id = item.NoteId })
         </td>
     </tr>

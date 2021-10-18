@@ -11,6 +11,7 @@ namespace ElevenNote.WebMVC.Controllers
 {
     public class CategoryController : Controller
     {
+       
         [Authorize]
         // GET: Category
         public ActionResult Index()
@@ -26,6 +27,7 @@ namespace ElevenNote.WebMVC.Controllers
         public ActionResult Create()
         {
             return View();
+
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -90,6 +92,16 @@ namespace ElevenNote.WebMVC.Controllers
             
         }
 
+        public ActionResult Delete(int? id)
+        {
+            var svc = CreateCategoryService();
+            CategoryDetail category = svc.GetCategoryById((int)id);
+            if (category == null)
+                return View(HttpNotFound());
+            return View(category);
+        }
+
+
         [ActionName("Delete")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -97,20 +109,31 @@ namespace ElevenNote.WebMVC.Controllers
         public ActionResult Delete(int id)
         {
             var catSvc = CreateCategoryService();
+            var noteSvc = CreateNoteService();
+            var noteList = GetCategoryNotes(id);
+            foreach(var item in noteList)
+            {
+                var editModel = new NoteEdit();
+                var detailModel = noteSvc.GetNoteById(item.NoteId);
+                editModel.NoteId = detailModel.NoteId;
+                editModel.Title = detailModel.Title;
+                editModel.Content = detailModel.Content;
+                editModel.CategoryId = null;
+                noteSvc.UpdateNote(editModel);
+                
+            }
             catSvc.DeleteCategory(id);
-            NoteCatUpdate(id);
             TempData["SaveResult"] = "Your category was deleted, and all notes with that category will be updated.";
-
+            return RedirectToAction("Index");
         }
-
-
 
 
         //Helper
 
-        public bool NoteCatUpdate(int catId)
+        public IEnumerable<NoteListItem> GetCategoryNotes(int? catId)
         {
             var svc = CreateNoteService();
+            return svc.GetNotesByCatId(catId);
         }
         private NoteService CreateNoteService()
         {

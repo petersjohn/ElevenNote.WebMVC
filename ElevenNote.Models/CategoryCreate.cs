@@ -9,6 +9,5 @@ namespace ElevenNote.Models
     public class CategoryCreate
     {
         public string Name { get; set; }
-        public Guid OwnerId { get; set; }
     }
 }
