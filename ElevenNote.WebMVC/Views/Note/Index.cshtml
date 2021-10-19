@@ -34,9 +34,16 @@
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
+        
+        
         <td>
-            @Html.DisplayFor(modelItem => item.CategoryId) <!--Ask about why the name isn't pulling thru'-->
+            @if (item.CategoryId != null)
+            {
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            }
+            <!--Ask about why the name isn't pulling thru'-->
         </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.CreatedUtc)
         </td>

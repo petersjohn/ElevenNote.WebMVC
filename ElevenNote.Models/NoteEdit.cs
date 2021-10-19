@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElevenNote.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,6 +15,9 @@ namespace ElevenNote.Models
         public string Title { get; set; }
         [Display(Name = "Category")]
         public int? CategoryId { get; set; }
+        
+        public virtual Category Category { get; set; }
+        
         public IEnumerable<SelectListItem> Categories { get; set; }
         public string Content { get; set; }
     }
