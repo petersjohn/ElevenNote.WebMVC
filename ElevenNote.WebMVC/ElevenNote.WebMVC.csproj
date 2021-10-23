@@ -245,6 +245,7 @@
     <Content Include="Views\Note\Create.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Note\Edit.cshtml" />
+    <Content Include="Views\Note\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
