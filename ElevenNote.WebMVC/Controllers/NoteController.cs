@@ -11,6 +11,7 @@ namespace ElevenNote.WebMVC.Controllers
 {
     public class NoteController : Controller
     {
+        
         [Authorize]
         // GET: Note
         public ActionResult Index()
@@ -24,8 +25,11 @@ namespace ElevenNote.WebMVC.Controllers
         //Get 
         public ActionResult Create()
         {
-            return View();
+            var service = CreateNoteService();
+            var viewModel = service.GetCreateView();
+            return View(viewModel);
         }
+  
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -54,13 +58,22 @@ namespace ElevenNote.WebMVC.Controllers
 
         public ActionResult Edit(int id)
         {
-            var service = CreateNoteService();
-            var detail = service.GetNoteById(id);
+            var noteSvc = CreateNoteService();
+            var catSvc = CreateCategoryService();
+            var detail = noteSvc.GetNoteById(id);
+            var categories = catSvc.GetCategories();
             var model = new NoteEdit
             {
                 NoteId = detail.NoteId,
                 Title = detail.Title,
-                Content = detail.Content
+                CategoryId = detail.CategoryID,
+                Content = detail.Content,
+                Categories = categories.Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.CategoryId.ToString()
+                })
+
             };
             return View(model);
         }
@@ -112,6 +125,13 @@ namespace ElevenNote.WebMVC.Controllers
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
             var service = new NoteService(userId);
+            return service;
+        }
+
+        private CategoryService CreateCategoryService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var service = new CategoryService(userId);
             return service;
         }
 
